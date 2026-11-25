@@ -14,7 +14,7 @@ i wpisz datę oraz skrót commita w polu „Ukończono”.
 | 1 | Generator poprawnych rekordów | [x] |
 | 2 | CLI i eksport JSON | [x] |
 | 3 | Eksport CSV | [x] |
-| 4 | Scenariusze testowe | [ ] |
+| 4 | Scenariusze testowe | [x] |
 | 5 | Bramki jakości | [ ] |
 | 6 | Frontend Flask | [ ] |
 | 7 | Skrypty uruchomieniowe | [ ] |
@@ -101,7 +101,7 @@ MVP = etapy 0–4.
 
 ---
 
-## [ ] Etap 4 – Scenariusze testowe
+## [x] Etap 4 – Scenariusze testowe
 
 **Zakres**
 - `testdata/scenarios.py`, parametr `--scenariusz` w CLI.
@@ -117,7 +117,7 @@ MVP = etapy 0–4.
 - Ten sam seed daje identyczny plik.
 
 **Commit:** `feat: scenariusze testowe`
-**Ukończono:** —
+**Ukończono:** 2026-11-25, `a7ecbcb`
 
 ---
 
