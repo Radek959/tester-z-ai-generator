@@ -12,7 +12,7 @@ i wpisz datę oraz skrót commita w polu „Ukończono”.
 |---|---|---|
 | 0 | Szkielet projektu | [x] |
 | 1 | Generator poprawnych rekordów | [x] |
-| 2 | CLI i eksport JSON | [ ] |
+| 2 | CLI i eksport JSON | [x] |
 | 3 | Eksport CSV | [ ] |
 | 4 | Scenariusze testowe | [ ] |
 | 5 | Bramki jakości | [ ] |
@@ -64,7 +64,7 @@ MVP = etapy 0–4.
 
 ---
 
-## [ ] Etap 2 – CLI i eksport JSON
+## [x] Etap 2 – CLI i eksport JSON
 
 **Zakres**
 - `testdata/writers.py` z `write_json` i rejestrem `format -> funkcja`.
@@ -81,7 +81,7 @@ MVP = etapy 0–4.
 - `--ilosc -5` daje komunikat po polsku zamiast tracebacku.
 
 **Commit:** `feat: CLI i eksport JSON`
-**Ukończono:** —
+**Ukończono:** 2026-11-25, `bc55270`
 
 ---
 
