@@ -126,11 +126,16 @@ MVP = etapy 0–4.
 **Zakres**
 - Testy jednostkowe (`unittest`) w `tests/`: generator (PESEL, seed), scenariusze, writery.
 - `pyproject.toml` z konfiguracją Ruff, `requirements-dev.txt` (ruff).
-- Jedno polecenie uruchamiające testy i Ruff (np. `check.bat`).
+- `check.bat` w katalogu głównym – jedno polecenie uruchamiające testy i Ruff:
+  - woła `.\.venv\Scripts\python.exe` wprost (bez aktywacji `.venv`), ścieżki względem pliku (`%~dp0`),
+  - uruchamia oba kroki nawet wtedy, gdy pierwszy zawiedzie, i na końcu podaje jeden wynik,
+  - kończy się `exit /b 0`, gdy wszystko przeszło, i `exit /b 1` w przeciwnym razie,
+  - nie ma `pause` ani innych pytań (agent uruchamia go nieinteraktywnie).
 
 **Weryfikacja ręczna**
-- `check.bat` kończy się na zielono.
-- Celowo zepsuty kod (np. zła suma PESEL) daje czerwony wynik.
+- `.\check.bat; $LASTEXITCODE` kończy się na zielono i wypisuje `0`.
+- Celowo zepsuty kod (np. zła suma PESEL) daje czerwony wynik i `1`.
+- Celowy błąd Ruff (np. nieużywany import) też daje `1`, a testy i tak się wykonują.
 
 **Commit:** `test: testy jednostkowe i Ruff`
 **Ukończono:** —

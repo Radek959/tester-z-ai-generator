@@ -69,12 +69,24 @@ Używaj instancji `random.Random(seed)`, nie globalnego `random`.
 
 ## Bramki jakości (od etapu 5)
 
-Przed zgłoszeniem etapu jako gotowy:
+Po każdej zmianie w kodzie uruchom bramki jakości:
+
+```powershell
+.\check.bat
+```
+
+- Zmiana jest gotowa dopiero, gdy `check.bat` kończy się kodem wyjścia 0.
+- Nie zgłaszaj etapu jako gotowego z czerwonym wynikiem.
+- Z Git Bash: `cmd //c check.bat`.
+
+`check.bat` uruchamia kolejno:
 
 ```powershell
 .\.venv\Scripts\python.exe -m unittest discover -s tests
 .\.venv\Scripts\python.exe -m ruff check .
 ```
+
+Dopóki `check.bat` nie istnieje (w trakcie etapu 5), uruchamiaj te dwa polecenia bezpośrednio.
 
 ## Poza zakresem pierwszej wersji
 
