@@ -171,7 +171,7 @@ MVP = etapy 0–4.
 - Po cofnięciu wszystkich celowych usterek ponowne `.\check.bat` kończy się kodem `0`; dopiero wtedy etap jest gotowy do ręcznego odbioru.
 
 **Commit:** `test: testy jednostkowe i Ruff`
-**Ukończono:** 2026-11-25, skrót commita do uzupełnienia po potwierdzeniu etapu przez użytkownika.
+**Ukończono:** 2026-11-25, `91f9f87`
 
 **Przyjęty kontrakt powtarzalności:** uzgodniona z użytkownikiem stała domyślna
 data odniesienia `2026-11-25`; opcjonalnie `--data-odniesienia RRRR-MM-DD` w CLI,
@@ -187,7 +187,7 @@ Ruff wykonuje się także po porażce testów. Potwierdzono wywołanie z innego
 katalogu przy ścieżkach ze spacjami i przywrócenie katalogu wywołującego,
 sprzątanie po celowej porażce testu zapisującego plik oraz zachowanie
 istniejącej zawartości `output/`. Po usunięciu celowych usterek kopia ponownie
-przeszła bramki. Commit czeka na odbiór użytkownika.
+przeszła bramki.
 
 ---
 
