@@ -219,7 +219,7 @@ przeszła bramki.
 - Świeży klon repo: dwuklik `setup.bat`, potem `start_web.bat` – formularz działa.
 
 **Commit:** `chore: skrypty uruchomieniowe`
-**Ukończono:** 2026-11-25, zmiany lokalne; skrót commita do uzupełnienia po potwierdzeniu etapu przez użytkownika.
+**Ukończono:** 2026-11-25, `8cb5500`
 
 **Wynik weryfikacji:** 58 testów `unittest` i Ruff przechodzą;
 `check.bat` kończy się kodem `0`. W izolowanej świeżej kopii ze spacjami
