@@ -22,6 +22,9 @@ Oba korzystają z tej samej logiki.
 
 - Iteracyjnie, małymi etapami łatwymi do ręcznej weryfikacji.
 - Plan etapów jest w `PLAN.md`. Rób tylko bieżący etap. Nie dodawaj funkcji z kolejnych etapów.
+- Etap można uznać za ukończony wyłącznie wtedy, gdy nowe funkcjonalności
+  mają testy jednostkowe w `tests/` (`unittest`). Brak testów dla nowej
+  funkcjonalności oznacza, że etap nie jest gotowy, nawet przy zielonym `check.bat`.
 - Commit dopiero po potwierdzeniu etapu przez użytkownika.
 - Po każdym wykonanym etapie oznacz go w `PLAN.md`: `[x]` przy nagłówku etapu
   i w tabeli „Postęp”, data i skrót commita w polu „Ukończono”.
