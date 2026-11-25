@@ -124,18 +124,51 @@ MVP = etapy 0–4.
 ## [ ] Etap 5 – Bramki jakości
 
 **Zakres**
-- Testy jednostkowe (`unittest`) w `tests/`: generator (PESEL, seed), scenariusze, writery.
-- `pyproject.toml` z konfiguracją Ruff, `requirements-dev.txt` (ruff).
+- Testy jednostkowe i integracyjne (`unittest`) w `tests/`, obejmujące zachowanie dostępne po etapach 0–4.
+- Generator:
+  - liczba rekordów, komplet wymaganych pól i `przypadek = poprawny`,
+  - PESEL: 11 cyfr, suma kontrolna, zgodność z datą urodzenia i płcią; jawne przypadki dla obu płci, dat 1999-12-31 i 2000-01-01 oraz 29 lutego,
+  - sprawdzanie PESEL niezależnie od produkcyjnej funkcji liczącej cyfrę kontrolną, z ustalonymi przykładami oczekiwanych wyników,
+  - identyczne dane dla tego samego seeda, różne dla wybranych różnych seedów oraz brak wpływu na globalny stan `random`.
+- Scenariusze:
+  - każdy obecny przypadek graniczny i błędny sprawdzony pod kątem rzeczywistej wartości oraz zgodności opisu w `przypadek`,
+  - `brakujace_pole`: brak dokładnie jednego pola danych, kolejne pola usuwane cyklicznie, `przypadek` pozostaje,
+  - `poprawne` daje te same dane co generator dla tej samej liczby rekordów i seeda,
+  - testy obejmują pełny cykl przypadków i początek kolejnego; daty odniesienia są ustalone, bez zależności od dnia uruchomienia.
+- Writery:
+  - ponowny odczyt przez `json` i `csv` oraz porównanie zapisanych danych, w tym polskich znaków i pola `przypadek`,
+  - JSON: UTF-8, czytelne wcięcia, polskie znaki bez escape'owania, brak usuniętego klucza,
+  - CSV: UTF-8, separator `,`, stała kolejność nagłówków, brakujące pole jako pusta komórka bez przesuwania pozostałych kolumn.
+- `service.generate_file`:
+  - wszystkie 4 scenariusze × 2 formaty: poprawna liczba rekordów, zwrócona ścieżka i zawartość pliku,
+  - pliki wyłącznie w `output/`, poprawne rozszerzenie oraz brak nadpisania wcześniejszego pliku przy tym samym znaczniku czasu,
+  - nieznany format i scenariusz, ilość 0, ujemna i ponad limit: polski komunikat błędu oraz brak utworzonego pliku,
+  - powtarzalność treści pliku (porównanie bajtów, bez wymagania identycznych nazw plików).
+- CLI: pomoc i poprawne wywołanie kończą się kodem 0; błędne argumenty oraz symulowany błąd zapisu dają niezerowy kod i polski komunikat bez tracebacku.
+- Izolacja testów: małe zestawy danych, niezależność od kolejności wykonania, pliki w osobnych katalogach tymczasowych wewnątrz `output/`; sprzątanie także po porażce, bez usuwania istniejących plików użytkownika. Ścieżki przez `pathlib`, symulowanie błędów przez `unittest.mock`.
+- Powtarzalność a bieżąca data — warunek do rozstrzygnięcia przed zamknięciem etapu:
+  - obecne przypadki „dziś” i „w przyszłości” zależą od `date.today()`, a `AGENTS.md` i `service` deklarują identyczną treść dla tego samego seeda i parametrów,
+  - ustalić i zapisać spójny kontrakt; ewentualne zawężenie wymagania z `AGENTS.md` wymaga uzgodnienia z użytkownikiem,
+  - testy z ustaloną datą sprawdzają deterministyczność, ale nie mogą być uznane za rozwiązanie tej rozbieżności; dodać test zachowania dla dwóch różnych dat odniesienia zgodnie z przyjętym kontraktem.
+- `pyproject.toml` z jawnym zestawem reguł Ruff: `E4`, `E7`, `E9`, `F`, `I`; wersja docelowa Pythona zgodna z używaną w projekcie. `requirements-dev.txt` z ustaloną dokładną wersją Ruff.
+- Krótka instrukcja w README: instalacja zależności deweloperskich przez interpreter z `.venv`, uruchomienie bramek i znaczenie kodów wyjścia.
 - `check.bat` w katalogu głównym – jedno polecenie uruchamiające testy i Ruff:
-  - woła `.\.venv\Scripts\python.exe` wprost (bez aktywacji `.venv`), ścieżki względem pliku (`%~dp0`),
-  - uruchamia oba kroki nawet wtedy, gdy pierwszy zawiedzie, i na końcu podaje jeden wynik,
+  - woła `.\.venv\Scripts\python.exe` wprost (bez aktywacji `.venv`), ustawia katalog roboczy względem pliku (`%~dp0`), ujmuje ścieżki w cudzysłowy i przywraca katalog wywołującego,
+  - uruchamia `-m unittest discover -s tests` i `-m ruff check .`, także gdy testy zawiodą; zapamiętuje wynik każdego kroku i na końcu podaje polskie podsumowanie,
+  - brak wykrytych testów oznacza porażkę, nawet jeśli samo `unittest` zgłosi sukces,
+  - brak interpretera lub Ruff daje czytelny komunikat i kod 1; przy braku Ruff testy nadal się wykonują,
   - kończy się `exit /b 0`, gdy wszystko przeszło, i `exit /b 1` w przeciwnym razie,
   - nie ma `pause` ani innych pytań (agent uruchamia go nieinteraktywnie).
 
 **Weryfikacja ręczna**
-- `.\check.bat; $LASTEXITCODE` kończy się na zielono i wypisuje `0`.
-- Celowo zepsuty kod (np. zła suma PESEL) daje czerwony wynik i `1`.
-- Celowy błąd Ruff (np. nieużywany import) też daje `1`, a testy i tak się wykonują.
+- Po instalacji zależności `.\check.bat; $LASTEXITCODE` uruchamia niezerową liczbę testów, oba kroki przechodzą i końcowy kod wynosi `0`.
+- Wywołanie skryptu z innego katalogu działa również przy ścieżce projektu ze spacjami; po zakończeniu katalog wywołującego pozostaje bez zmian.
+- Celowo zepsuta suma PESEL powoduje porażkę odpowiedniego testu i końcowy kod `1`; Ruff nadal się wykonuje, a jego sukces nie nadpisuje błędu testów.
+- Celowy błąd Ruff (np. nieużywany import) daje końcowy kod `1`, przy wykonanych testach.
+- Brak wykrytych testów, brak Ruff i brak interpretera sprawdzone osobno, w izolacji lub przez symulację, bez usuwania właściwej `.venv` ani testów: każdy przypadek daje kod `1` i zrozumiałe podsumowanie.
+- Testy nie pozostawiają plików ani nie zmieniają istniejącej zawartości `output/`, również po celowej porażce testu zapisującego plik.
+- Kontrakt powtarzalności jest rozstrzygnięty i udokumentowany, a test dla dwóch dat odniesienia potwierdza przyjęte zachowanie.
+- Po cofnięciu wszystkich celowych usterek ponowne `.\check.bat` kończy się kodem `0`; dopiero wtedy etap jest gotowy do ręcznego odbioru.
 
 **Commit:** `test: testy jednostkowe i Ruff`
 **Ukończono:** —
