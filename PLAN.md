@@ -97,7 +97,7 @@ MVP = etapy 0–4.
 - Import w Excelu (Dane → Z tekstu/CSV, UTF-8) daje poprawne kolumny.
 
 **Commit:** `feat: eksport CSV`
-**Ukończono:** —
+**Ukończono:** 2026-11-25, `15080e1`
 
 ---
 
