@@ -72,7 +72,7 @@ wymagań, projektowania testów, testów eksploracyjnych, Playwrighta, code revi
    albo sklonuj repozytorium:
 
    ```powershell
-   git clone https://github.com/Radek959/tester-z-ai.git
+   git clone https://github.com/Radek959/tester-z-ai-generator.git
    ```
 
 2. Kliknij dwukrotnie **`setup.bat`**. Poczekaj na komunikat "Gotowe", a potem naciśnij dowolny klawisz,
@@ -205,12 +205,6 @@ Darmowy PDF z praktycznymi materiałami o Playwrighcie: komendy, lokatory, aserc
 i checklisty.
 
 [Playwright Starter Kit →](https://starter.rwasik.pl/)
-
-### 🐞 Klinika Debug
-
-Aplikacja szkoleniowa do ćwiczeń z testowania i debugowania z AI.
-
-[Klinika Debug →](https://klinikadebug.rwasik.pl/)
 
 ---
 
