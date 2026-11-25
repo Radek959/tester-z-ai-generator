@@ -14,7 +14,8 @@ class ServiceTests(OutputTestCase):
         self.addCleanup(patcher.stop)
 
     def test_all_scenarios_and_formats(self):
-        for scenario in ("poprawne", "graniczne", "brakujace_pole", "bledne"):
+        for scenario in ("poprawne", "graniczne", "brakujace_pole", "bledne",
+                         "duplikaty", "nietypowe_znaki"):
             expected = generuj_rekordy(scenario, 20, 42, REFERENCE)
             for format in ("json", "csv"):
                 with self.subTest(scenario=scenario, format=format):
@@ -60,7 +61,8 @@ class ServiceTests(OutputTestCase):
                 self.assertEqual(sentinel.read_text(encoding="utf-8"), "Plik użytkownika")
 
     def test_repeatability_in_bytes_on_different_days(self):
-        for scenario in ("poprawne", "graniczne", "brakujace_pole", "bledne"):
+        for scenario in ("poprawne", "graniczne", "brakujace_pole", "bledne",
+                         "duplikaty", "nietypowe_znaki"):
             for format in ("json", "csv"):
                 results = []
                 for today in (date(2024, 2, 29), date(2030, 1, 1)):

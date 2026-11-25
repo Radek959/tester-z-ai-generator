@@ -2,10 +2,11 @@
 
 Narzędzie dla testera, który nie programuje. Tworzy pliki z danymi testowymi
 (polskie dane osobowe) w różnych scenariuszach: poprawne dane, wartości
-graniczne, brakujące pola, błędne wartości.
+graniczne, brakujące pola, błędne wartości, duplikaty i nietypowe znaki.
 
-> Status: **etap 7 – skrypty uruchomieniowe.** Dostępne są CLI i formularz w przeglądarce,
-> JSON i CSV oraz scenariusze `poprawne`, `graniczne`, `brakujace_pole` i `bledne`.
+> Status: **etap 8 – duplikaty i nietypowe znaki.** Dostępne są CLI i formularz w przeglądarce,
+> JSON i CSV oraz scenariusze `poprawne`, `graniczne`, `brakujace_pole`, `bledne`,
+> `duplikaty` i `nietypowe_znaki`.
 
 ## Wymagania
 

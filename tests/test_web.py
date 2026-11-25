@@ -1,8 +1,9 @@
 from unittest.mock import patch
 
 from testdata import service
+from testdata.scenarios import SCENARIUSZE
 from tests.helpers import OutputTestCase, read_records
-from web.app import app
+from web.app import OPISY_SCENARIUSZY, app
 
 
 class WebTests(OutputTestCase):
@@ -25,9 +26,22 @@ class WebTests(OutputTestCase):
         odpowiedz = self.client.get("/")
         self.assertEqual(odpowiedz.status_code, 200)
         html = odpowiedz.get_data(as_text=True)
-        for nazwa in ("json", "csv", "poprawne", "graniczne", "brakujace_pole", "bledne"):
+        for nazwa in ("json", "csv", "poprawne", "graniczne", "brakujace_pole", "bledne",
+                      "duplikaty", "nietypowe_znaki"):
             self.assertIn(f'value="{nazwa}"', html)
         self.assertIn("Generuj", html)
+
+    def test_every_scenario_on_form_with_description(self):
+        # Każdy scenariusz z logiki musi być do wyboru na froncie i mieć opis.
+        html = self.client.get("/").get_data(as_text=True)
+        for nazwa in SCENARIUSZE:
+            with self.subTest(scenariusz=nazwa):
+                self.assertTrue(OPISY_SCENARIUSZY.get(nazwa, "").strip())
+                self.assertIn(f'value="{nazwa}"', html)
+                self.assertIn(
+                    f"<code>{nazwa}</code><small>{OPISY_SCENARIUSZY[nazwa]}</small>", html
+                )
+        self.assertEqual(set(OPISY_SCENARIUSZY), set(SCENARIUSZE))
 
     def test_generates_file_and_download_link(self):
         for format in ("json", "csv"):
@@ -51,6 +65,15 @@ class WebTests(OutputTestCase):
         (z_formularza,) = self.files()
         z_service = service.generate_file("csv", "graniczne", 12, 7)
         self.assertEqual(z_formularza.read_bytes(), z_service.read_bytes())
+
+    def test_new_scenarios_from_form(self):
+        for scenariusz in ("duplikaty", "nietypowe_znaki"):
+            with self.subTest(scenariusz=scenariusz):
+                odpowiedz = self.post(format="csv", scenariusz=scenariusz, ilosc="10", seed="5")
+                self.assertEqual(odpowiedz.status_code, 200)
+                sciezka = next(p for p in self.files() if p.name.startswith(scenariusz))
+                z_service = service.generate_file("csv", scenariusz, 10, 5)
+                self.assertEqual(sciezka.read_bytes(), z_service.read_bytes())
 
     def test_empty_seed_means_random(self):
         odpowiedz = self.post(seed="  ")

@@ -9,8 +9,8 @@ from unittest.mock import patch
 
 from testdata import __main__ as cli
 from testdata import service
-from testdata.scenarios import generuj_rekordy
-from tests.helpers import OutputTestCase, read_records
+from testdata.scenarios import SCENARIUSZE, generuj_rekordy
+from tests.helpers import REFERENCE, OutputTestCase, csv_records, read_records
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -33,7 +33,8 @@ class CliTests(OutputTestCase):
             capture_output=True, encoding="utf-8", env=env, timeout=20,
         )
         self.assertEqual(result.returncode, 0, result.stderr)
-        for text in ("Użycie:", "Parametry", "--scenariusz", "--data-odniesienia", "2026-11-25"):
+        for text in ("Użycie:", "Parametry", "--scenariusz", "--data-odniesienia", "2026-11-25",
+                     "duplikaty", "nietypowe_znaki"):
             self.assertIn(text, result.stdout)
         self.assertEqual(result.stderr, "")
 
@@ -57,6 +58,22 @@ class CliTests(OutputTestCase):
         paths = list(self.folder.iterdir())
         self.assertEqual(len(paths), 1)
         self.assertEqual(read_records(paths[0]), generuj_rekordy("graniczne", 11, 42, date(2024, 2, 29)))
+
+    def test_every_scenario_generates_file_and_is_described_in_help(self):
+        code, help_text, _ = self.invoke(["--help"])
+        self.assertEqual(code, 0)
+        with patch.object(service, "KATALOG_WYJSCIOWY", self.folder):
+            for scenario in SCENARIUSZE:
+                with self.subTest(scenario=scenario):
+                    self.assertRegex(help_text, rf"\n  {scenario} +– \S")
+                    code, stdout, stderr = self.invoke(
+                        ["--scenariusz", scenario, "--format", "csv", "--ilosc", "6", "--seed", "3"]
+                    )
+                    self.assertEqual(code, 0, stderr)
+                    path = next(p for p in self.folder.iterdir() if p.name.startswith(f"{scenario}_csv_"))
+                    self.assertEqual(
+                        read_records(path), csv_records(generuj_rekordy(scenario, 6, 3, REFERENCE))
+                    )
 
     def test_default_and_explicit_parameters_forwarded_to_service(self):
         cases = (

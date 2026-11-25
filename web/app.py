@@ -16,6 +16,8 @@ OPISY_SCENARIUSZY = {
     "graniczne": "poprawne wartości na granicach",
     "brakujace_pole": "w każdym rekordzie brakuje innego pola",
     "bledne": "w każdym rekordzie jedno pole ma błędną wartość",
+    "duplikaty": "pełne kopie rekordów i powtórzone PESEL lub email",
+    "nietypowe_znaki": "emoji, cudzysłowy, przecinki, nowe linie, długie wartości",
 }
 
 app = Flask(__name__)

@@ -56,6 +56,8 @@ def _zbuduj_parser() -> argparse.ArgumentParser:
             "  graniczne       – poprawne wartości na granicach (np. imię 1 znak, 29 lutego)\n"
             "  brakujace_pole  – w każdym rekordzie brakuje innego pola\n"
             "  bledne          – w każdym rekordzie jedno pole ma błędną wartość\n"
+            "  duplikaty       – pełne kopie rekordów i powtórzone PESEL lub email\n"
+            "  nietypowe_znaki – emoji, cudzysłowy, przecinki, nowe linie, długie wartości\n"
             "Opis przypadku jest w polu „przypadek” każdego rekordu.\n"
             "\n"
             "Plik trafia do folderu output/."
