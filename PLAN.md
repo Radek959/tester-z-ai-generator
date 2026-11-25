@@ -16,7 +16,7 @@ i wpisz datę oraz skrót commita w polu „Ukończono”.
 | 3 | Eksport CSV | [x] |
 | 4 | Scenariusze testowe | [x] |
 | 5 | Bramki jakości | [x] |
-| 6 | Frontend Flask | [ ] |
+| 6 | Frontend Flask | [x] |
 | 7 | Skrypty uruchomieniowe | [ ] |
 | 8 | Duplikaty i nietypowe znaki | [ ] |
 | 9 | Eksport TXT | [ ] |
@@ -191,7 +191,7 @@ przeszła bramki.
 
 ---
 
-## [ ] Etap 6 – Frontend Flask
+## [x] Etap 6 – Frontend Flask
 
 **Zakres**
 - `web/app.py`, `web/templates/index.html`, `requirements.txt` (Flask).
@@ -204,7 +204,7 @@ przeszła bramki.
 - Ten sam seed i parametry dają plik identyczny z wynikiem CLI.
 
 **Commit:** `feat: frontend Flask`
-**Ukończono:** —
+**Ukończono:** 2026-11-25, `dd910a4`
 
 ---
 
