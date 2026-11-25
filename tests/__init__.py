@@ -1,0 +1,1 @@
+"""Testy generatora danych testowych."""

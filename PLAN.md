@@ -15,7 +15,7 @@ i wpisz datę oraz skrót commita w polu „Ukończono”.
 | 2 | CLI i eksport JSON | [x] |
 | 3 | Eksport CSV | [x] |
 | 4 | Scenariusze testowe | [x] |
-| 5 | Bramki jakości | [ ] |
+| 5 | Bramki jakości | [x] |
 | 6 | Frontend Flask | [ ] |
 | 7 | Skrypty uruchomieniowe | [ ] |
 | 8 | Duplikaty i nietypowe znaki | [ ] |
@@ -121,7 +121,7 @@ MVP = etapy 0–4.
 
 ---
 
-## [ ] Etap 5 – Bramki jakości
+## [x] Etap 5 – Bramki jakości
 
 **Zakres**
 - Testy jednostkowe i integracyjne (`unittest`) w `tests/`, obejmujące zachowanie dostępne po etapach 0–4.
@@ -171,7 +171,23 @@ MVP = etapy 0–4.
 - Po cofnięciu wszystkich celowych usterek ponowne `.\check.bat` kończy się kodem `0`; dopiero wtedy etap jest gotowy do ręcznego odbioru.
 
 **Commit:** `test: testy jednostkowe i Ruff`
-**Ukończono:** —
+**Ukończono:** 2026-11-25, skrót commita do uzupełnienia po potwierdzeniu etapu przez użytkownika.
+
+**Przyjęty kontrakt powtarzalności:** uzgodniona z użytkownikiem stała domyślna
+data odniesienia `2026-11-25`; opcjonalnie `--data-odniesienia RRRR-MM-DD` w CLI,
+`reference_date` w service i `dzis` w scenariuszach. Ten sam podany seed
+i parametry dają identyczną treść niezależnie od zegara. Kontrakt opisano
+w `AGENTS.md` i README oraz sprawdzono dla dwóch dat odniesienia i dwóch
+symulowanych dni uruchomienia.
+
+**Wynik weryfikacji:** 37 testów `unittest` i Ruff 0.17.6 przechodzą;
+`check.bat` kończy się kodem `0`. W izolowanych kopiach sprawdzono kod `1`
+dla zepsutej sumy PESEL, nieużywanego importu, braku testów, Ruff i interpretera.
+Ruff wykonuje się także po porażce testów. Potwierdzono wywołanie z innego
+katalogu przy ścieżkach ze spacjami i przywrócenie katalogu wywołującego,
+sprzątanie po celowej porażce testu zapisującego plik oraz zachowanie
+istniejącej zawartości `output/`. Po usunięciu celowych usterek kopia ponownie
+przeszła bramki. Commit czeka na odbiór użytkownika.
 
 ---
 

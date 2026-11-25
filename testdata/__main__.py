@@ -5,6 +5,7 @@ Tylko zbiera parametry i woła `service.generate_file`.
 
 import argparse
 import sys
+from datetime import date
 
 from testdata import service
 from testdata.scenarios import SCENARIUSZE
@@ -88,6 +89,10 @@ def _zbuduj_parser() -> argparse.ArgumentParser:
         help="ziarno losowania – ten sam seed daje ten sam plik (domyślnie: losowe)",
     )
     opcje.add_argument("-h", "--help", action="help", help="pokaż tę pomoc i zakończ")
+    opcje.add_argument(
+        "--data-odniesienia", default=None, metavar="RRRR-MM-DD",
+        help="data oznaczająca dziś w scenariuszach (domyślnie: 2026-11-25)",
+    )
     return parser
 
 
@@ -102,10 +107,19 @@ def main(argv: list[str] | None = None) -> None:
     args = _zbuduj_parser().parse_args(argv)
     ilosc = _na_liczbe(args.ilosc, "Ilość")
     seed = None if args.seed is None else _na_liczbe(args.seed, "Seed")
+    data_odniesienia = None
+    if args.data_odniesienia is not None:
+        try:
+            data_odniesienia = date.fromisoformat(args.data_odniesienia)
+            if data_odniesienia.isoformat() != args.data_odniesienia:
+                raise ValueError
+        except ValueError:
+            _blad("Data odniesienia musi być poprawną datą w formacie RRRR-MM-DD.", kod=2)
 
     try:
         sciezka = service.generate_file(
-            args.format.lower(), args.scenariusz.lower(), ilosc, seed
+            args.format.lower(), args.scenariusz.lower(), ilosc, seed,
+            reference_date=data_odniesienia,
         )
     except ValueError as e:
         _blad(str(e), kod=2)

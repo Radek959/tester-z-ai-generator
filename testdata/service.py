@@ -3,7 +3,7 @@
 CLI i frontend tylko zbierają parametry i wołają `generate_file`.
 """
 
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
 
 from testdata.scenarios import SCENARIUSZE, generuj_rekordy
@@ -39,14 +39,18 @@ def _nowa_sciezka(format: str, scenario: str) -> Path:
     return sciezka
 
 
-def generate_file(format: str, scenario: str, count: int, seed: int | None = None) -> Path:
+def generate_file(
+    format: str, scenario: str, count: int, seed: int | None = None,
+    reference_date: date | None = None,
+) -> Path:
     """Generuje plik z danymi testowymi i zwraca ścieżkę do niego.
 
     Ten sam `seed` i parametry dają identyczną treść pliku.
+    `reference_date` określa „dziś” w scenariuszach (domyślnie 2026-11-25).
     Błędne parametry zgłaszane są jako `ValueError` z opisem po polsku.
     """
     _sprawdz_parametry(format, scenario, count)
-    rekordy = generuj_rekordy(scenario, count, seed)
+    rekordy = generuj_rekordy(scenario, count, seed, dzis=reference_date)
     KATALOG_WYJSCIOWY.mkdir(exist_ok=True)
     sciezka = _nowa_sciezka(format, scenario)
     WRITERS[format](rekordy, sciezka)

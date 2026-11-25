@@ -67,6 +67,13 @@ CSV: UTF-8, separator `,` (nie dostosowujemy do polskiego Excela).
 Parametr `seed` – ten sam seed i parametry dają identyczną treść pliku.
 Używaj instancji `random.Random(seed)`, nie globalnego `random`.
 
+„Dziś” i „w przyszłości” oznaczają daty względem jawnej daty odniesienia,
+domyślnie stałej `2026-11-25`, niezależnej od zegara komputera.
+Datę można podać w CLI przez `--data-odniesienia RRRR-MM-DD`, w service
+przez `reference_date` (`datetime.date`), a w scenariuszach przez `dzis`.
+Data odniesienia jest częścią parametrów: jej zmiana może zmienić treść pliku.
+Gwarancja powtarzalności dotyczy podanego seeda; brak seeda oznacza losowe dane.
+
 ## Bramki jakości (od etapu 5)
 
 Po każdej zmianie w kodzie uruchom bramki jakości:

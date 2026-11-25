@@ -13,6 +13,7 @@ from datetime import date, timedelta
 from testdata.generator import POLA_OSOBY, generuj_osobe, pesel
 
 MAKS_DLUGOSC_IMIENIA = 50
+DOMYSLNA_DATA_ODNIESIENIA = date(2026, 11, 25)
 
 # Przypadek: (rekord, rng, dzis) -> None, modyfikuje rekord w miejscu.
 Przypadek = Callable[[dict, random.Random, date], None]
@@ -132,7 +133,15 @@ def _data_30_lutego(rekord, rng, dzis):
 
 
 def _data_w_przyszlosci(rekord, rng, dzis):
-    _ustaw_date(rekord, dzis + timedelta(days=rng.randint(1, 3650)), rng)
+    przesuniecie = timedelta(days=rng.randint(1, 3650))
+    try:
+        data = dzis + przesuniecie
+    except OverflowError:
+        raise ValueError(
+            f"Data odniesienia {dzis.isoformat()} jest poza zakresem: "
+            "nie da się utworzyć daty urodzenia w przyszłości."
+        ) from None
+    _ustaw_date(rekord, data, rng)
 
 
 BLEDNE: list[Przypadek] = [
@@ -175,7 +184,8 @@ def generuj_rekordy(
 ) -> list[dict]:
     """Zwraca `ilosc` rekordów dla podanego scenariusza.
 
-    Ten sam `seed` (i ten sam dzień) daje identyczną listę.
+    Ten sam `seed` i parametry dają identyczną listę niezależnie od zegara.
+    `dzis` to jawna data odniesienia; domyślnie 2026-11-25.
     Scenariusz `poprawne` daje to samo co `generator.generuj_osoby`.
     """
     if scenariusz not in SCENARIUSZE:
@@ -185,7 +195,7 @@ def generuj_rekordy(
         )
     if ilosc < 0:
         raise ValueError("Liczba rekordów nie może być ujemna.")
-    dzis = dzis or date.today()
+    dzis = dzis if dzis is not None else DOMYSLNA_DATA_ODNIESIENIA
     rng = random.Random(seed)
     przypadki = SCENARIUSZE[scenariusz]
     rekordy = []
