@@ -17,7 +17,7 @@ i wpisz datę oraz skrót commita w polu „Ukończono”.
 | 4 | Scenariusze testowe | [x] |
 | 5 | Bramki jakości | [x] |
 | 6 | Frontend Flask | [x] |
-| 7 | Skrypty uruchomieniowe | [ ] |
+| 7 | Skrypty uruchomieniowe | [x] |
 | 8 | Duplikaty i nietypowe znaki | [ ] |
 | 9 | Eksport TXT | [ ] |
 | 10 | Eksport VCF | [ ] |
@@ -208,7 +208,7 @@ przeszła bramki.
 
 ---
 
-## [ ] Etap 7 – Skrypty uruchomieniowe
+## [x] Etap 7 – Skrypty uruchomieniowe
 
 **Zakres**
 - `setup.bat` – tworzy `.venv` (jeśli brak) i instaluje zależności.
@@ -219,7 +219,17 @@ przeszła bramki.
 - Świeży klon repo: dwuklik `setup.bat`, potem `start_web.bat` – formularz działa.
 
 **Commit:** `chore: skrypty uruchomieniowe`
-**Ukończono:** —
+**Ukończono:** 2026-11-25, zmiany lokalne; skrót commita do uzupełnienia po potwierdzeniu etapu przez użytkownika.
+
+**Wynik weryfikacji:** 58 testów `unittest` i Ruff przechodzą;
+`check.bat` kończy się kodem `0`. W izolowanej świeżej kopii ze spacjami
+w ścieżce i Pythonem dostępnym w PATH sprawdzono utworzenie `.venv`
+oraz rzeczywistą instalację zależności przez `setup.bat`. Sprawdzono też
+formularz, generowanie i pobranie pliku przez HTTP z nowego środowiska.
+Testy skryptów obejmują ponowne użycie `.venv`, brak Pythona lub Flask,
+błędy tworzenia środowiska i instalacji oraz zachowanie kodu wyjścia
+i katalogu wywołującego. Otwarcie przeglądarki jest symulowane w testach.
+Użytkownik potwierdził odbiór etapu 2026-11-25.
 
 ---
 
