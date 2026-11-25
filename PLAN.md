@@ -11,7 +11,7 @@ i wpisz datę oraz skrót commita w polu „Ukończono”.
 | Etap | Nazwa | Status |
 |---|---|---|
 | 0 | Szkielet projektu | [x] |
-| 1 | Generator poprawnych rekordów | [ ] |
+| 1 | Generator poprawnych rekordów | [x] |
 | 2 | CLI i eksport JSON | [ ] |
 | 3 | Eksport CSV | [ ] |
 | 4 | Scenariusze testowe | [ ] |
@@ -44,7 +44,7 @@ MVP = etapy 0–4.
 
 ---
 
-## [ ] Etap 1 – Generator poprawnych rekordów
+## [x] Etap 1 – Generator poprawnych rekordów
 
 **Zakres**
 - `testdata/__init__.py`, `testdata/generator.py`.
