@@ -13,7 +13,7 @@ i wpisz datę oraz skrót commita w polu „Ukończono”.
 | 0 | Szkielet projektu | [x] |
 | 1 | Generator poprawnych rekordów | [x] |
 | 2 | CLI i eksport JSON | [x] |
-| 3 | Eksport CSV | [ ] |
+| 3 | Eksport CSV | [x] |
 | 4 | Scenariusze testowe | [ ] |
 | 5 | Bramki jakości | [ ] |
 | 6 | Frontend Flask | [ ] |
@@ -85,7 +85,7 @@ MVP = etapy 0–4.
 
 ---
 
-## [ ] Etap 3 – Eksport CSV
+## [x] Etap 3 – Eksport CSV
 
 **Zakres**
 - `write_csv` w `writers.py`, wpis w rejestrze.

@@ -45,7 +45,7 @@ def _zbuduj_parser() -> argparse.ArgumentParser:
         epilog=(
             "Przykłady:\n"
             "  python -m testdata --format json --ilosc 10\n"
-            "  python -m testdata --format json --ilosc 50 --seed 123\n"
+            "  python -m testdata --format csv --ilosc 50 --seed 123\n"
             "\n"
             "Plik trafia do folderu output/."
         ),
