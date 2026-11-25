@@ -4,8 +4,8 @@ Narzędzie dla testera, który nie programuje. Tworzy pliki z danymi testowymi
 (polskie dane osobowe) w różnych scenariuszach: poprawne dane, wartości
 graniczne, brakujące pola, błędne wartości.
 
-> Status: **etap 5 – bramki jakości.** Dostępne są CLI, JSON i CSV oraz
-> scenariusze `poprawne`, `graniczne`, `brakujace_pole` i `bledne`.
+> Status: **etap 6 – frontend Flask.** Dostępne są CLI i formularz w przeglądarce,
+> JSON i CSV oraz scenariusze `poprawne`, `graniczne`, `brakujace_pole` i `bledne`.
 
 ## Wymagania
 
@@ -34,6 +34,27 @@ graniczne, brakujące pola, błędne wartości.
    .\.venv\Scripts\python.exe -m testdata --format csv --scenariusz bledne --ilosc 20 --seed 42
    .\.venv\Scripts\python.exe -m testdata --help
    ```
+
+## Formularz w przeglądarce
+
+1. Zainstaluj Flask (raz):
+
+   ```powershell
+   .\.venv\Scripts\python.exe -m pip install -r requirements.txt
+   ```
+
+2. Uruchom serwer:
+
+   ```powershell
+   .\.venv\Scripts\python.exe -m web.app
+   ```
+
+3. Otwórz w przeglądarce <http://127.0.0.1:5000>, wybierz format, scenariusz,
+   ilość i (opcjonalnie) seed, kliknij **Generuj**, a potem **Pobierz plik**.
+   Plik zapisuje się też w `output/`. Serwer zatrzymasz klawiszami `Ctrl+C`.
+
+Formularz używa domyślnej daty odniesienia, więc ten sam seed i parametry dają
+plik identyczny z wynikiem CLI.
 
 ## Powtarzalność i data odniesienia
 
