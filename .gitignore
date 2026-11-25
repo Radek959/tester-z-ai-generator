@@ -1,0 +1,20 @@
+# Środowisko wirtualne
+.venv/
+
+# Wygenerowane pliki (katalog zostaje dzięki .gitkeep)
+output/*
+!output/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Narzędzia
+.ruff_cache/
+.pytest_cache/
+
+# Edytory i system
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
