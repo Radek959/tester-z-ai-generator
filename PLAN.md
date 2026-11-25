@@ -60,7 +60,7 @@ MVP = etapy 0–4.
 - PESEL z wyniku sprawdzony w dowolnym walidatorze online jest poprawny.
 
 **Commit:** `feat: generator poprawnych rekordów`
-**Ukończono:** —
+**Ukończono:** 2026-11-25, `e9e0777`
 
 ---
 
