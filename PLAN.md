@@ -18,7 +18,7 @@ i wpisz datę oraz skrót commita w polu „Ukończono”.
 | 5 | Bramki jakości | [x] |
 | 6 | Frontend Flask | [x] |
 | 7 | Skrypty uruchomieniowe | [x] |
-| 8 | Duplikaty i nietypowe znaki | [ ] |
+| 8 | Duplikaty i nietypowe znaki | [x] |
 | 9 | Eksport TXT | [ ] |
 | 10 | Eksport VCF | [ ] |
 | 11 | Eksport ICS | [ ] |
@@ -233,7 +233,7 @@ Użytkownik potwierdził odbiór etapu 2026-11-25.
 
 ---
 
-## [ ] Etap 8 – Duplikaty i nietypowe znaki
+## [x] Etap 8 – Duplikaty i nietypowe znaki
 
 **Zakres**
 - Scenariusz `duplikaty` – pełne duplikaty rekordów oraz duplikaty kluczowych pól (PESEL, email).
@@ -245,7 +245,16 @@ Użytkownik potwierdził odbiór etapu 2026-11-25.
 - CSV z nietypowymi znakami nadal parsuje się poprawnie (import w Excelu).
 
 **Commit:** `feat: duplikaty i nietypowe znaki`
-**Ukończono:** —
+**Ukończono:** 2026-11-25, `c8b1164`
+
+**Wynik weryfikacji:** 70 testów `unittest` i Ruff przechodzą;
+`check.bat` kończy się kodem `0`. `duplikaty`: grupy po 5 rekordów (wzorzec,
+pełna kopia, ten sam PESEL, ten sam email, email inną wielkością liter).
+`nietypowe_znaki`: 7 przypadków (emoji, cudzysłowy, apostrof, przecinek,
+nowa linia, spacje na brzegach, 1000 znaków). Testy pilnują, że każdy
+scenariusz ma opis we froncie i w pomocy CLI oraz generuje plik w obu
+interfejsach (zasada dopisana do `AGENTS.md` w `edb12db`). Import CSV
+w Excelu – weryfikacja ręczna użytkownika.
 
 ---
 
