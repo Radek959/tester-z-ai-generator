@@ -6,12 +6,10 @@ CLI i frontend tylko zbierają parametry i wołają `generate_file`.
 from datetime import datetime
 from pathlib import Path
 
-from testdata.generator import generuj_osoby
+from testdata.scenarios import SCENARIUSZE, generuj_rekordy
 from testdata.writers import WRITERS
 
 KATALOG_WYJSCIOWY = Path(__file__).resolve().parent.parent / "output"
-
-SCENARIUSZE = ("poprawne",)
 
 MAKS_ILOSC = 100_000
 
@@ -48,7 +46,7 @@ def generate_file(format: str, scenario: str, count: int, seed: int | None = Non
     Błędne parametry zgłaszane są jako `ValueError` z opisem po polsku.
     """
     _sprawdz_parametry(format, scenario, count)
-    rekordy = generuj_osoby(count, seed)
+    rekordy = generuj_rekordy(scenario, count, seed)
     KATALOG_WYJSCIOWY.mkdir(exist_ok=True)
     sciezka = _nowa_sciezka(format, scenario)
     WRITERS[format](rekordy, sciezka)

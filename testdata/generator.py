@@ -50,6 +50,12 @@ MIASTA = {
     "Zielona Góra": ["65"],
 }
 
+# Pola encji `osoba` w stałej kolejności (m.in. kolejność kolumn w CSV).
+POLA_OSOBY = (
+    "imie", "nazwisko", "pesel", "data_urodzenia", "email", "telefon",
+    "kod_pocztowy", "miasto", "przypadek",
+)
+
 DOMENY_EMAIL = ["example.com", "example.org", "example.net"]
 
 # Stały zakres dat urodzenia, żeby wynik nie zależał od dnia uruchomienia.

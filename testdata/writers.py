@@ -9,6 +9,8 @@ import json
 from collections.abc import Callable
 from pathlib import Path
 
+from testdata.generator import POLA_OSOBY
+
 
 def write_json(rekordy: list[dict], sciezka: Path) -> None:
     """Zapisuje rekordy jako JSON w UTF-8, z wcięciami i polskimi znakami."""
@@ -17,8 +19,12 @@ def write_json(rekordy: list[dict], sciezka: Path) -> None:
 
 
 def _kolumny(rekordy: list[dict]) -> list[str]:
-    """Zwraca nazwy pól w kolejności pierwszego wystąpienia we wszystkich rekordach."""
-    kolumny: dict[str, None] = {}
+    """Zwraca nazwy kolumn: wszystkie pola `osoba` w stałej kolejności,
+    a po nich ewentualne inne pola w kolejności pierwszego wystąpienia.
+
+    Dzięki temu brakujące pole daje pustą komórkę, a nie przesunięte kolumny.
+    """
+    kolumny: dict[str, None] = dict.fromkeys(POLA_OSOBY)
     for rekord in rekordy:
         kolumny.update(dict.fromkeys(rekord))
     return list(kolumny)

@@ -7,6 +7,7 @@ import argparse
 import sys
 
 from testdata import service
+from testdata.scenarios import SCENARIUSZE
 from testdata.writers import WRITERS
 
 DOMYSLNA_ILOSC = 10
@@ -39,6 +40,7 @@ def _blad(komunikat: str, kod: int = 1) -> None:
 
 def _zbuduj_parser() -> argparse.ArgumentParser:
     formaty = ", ".join(WRITERS)
+    scenariusze = ", ".join(SCENARIUSZE)
     parser = _PolskiParser(
         prog="python -m testdata",
         description="Generator danych testowych – tworzy plik z polskimi danymi osobowymi.",
@@ -46,6 +48,14 @@ def _zbuduj_parser() -> argparse.ArgumentParser:
             "Przykłady:\n"
             "  python -m testdata --format json --ilosc 10\n"
             "  python -m testdata --format csv --ilosc 50 --seed 123\n"
+            "  python -m testdata --scenariusz bledne --format csv --ilosc 20\n"
+            "\n"
+            "Scenariusze:\n"
+            "  poprawne        – wszystkie dane poprawne\n"
+            "  graniczne       – poprawne wartości na granicach (np. imię 1 znak, 29 lutego)\n"
+            "  brakujace_pole  – w każdym rekordzie brakuje innego pola\n"
+            "  bledne          – w każdym rekordzie jedno pole ma błędną wartość\n"
+            "Opis przypadku jest w polu „przypadek” każdego rekordu.\n"
             "\n"
             "Plik trafia do folderu output/."
         ),
@@ -58,6 +68,12 @@ def _zbuduj_parser() -> argparse.ArgumentParser:
         default="json",
         metavar="FORMAT",
         help=f"format pliku: {formaty} (domyślnie: json)",
+    )
+    opcje.add_argument(
+        "--scenariusz",
+        default="poprawne",
+        metavar="NAZWA",
+        help=f"scenariusz testowy: {scenariusze} (domyślnie: poprawne)",
     )
     opcje.add_argument(
         "--ilosc",
@@ -88,7 +104,9 @@ def main(argv: list[str] | None = None) -> None:
     seed = None if args.seed is None else _na_liczbe(args.seed, "Seed")
 
     try:
-        sciezka = service.generate_file(args.format.lower(), "poprawne", ilosc, seed)
+        sciezka = service.generate_file(
+            args.format.lower(), args.scenariusz.lower(), ilosc, seed
+        )
     except ValueError as e:
         _blad(str(e), kod=2)
     except OSError as e:
