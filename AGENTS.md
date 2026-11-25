@@ -21,8 +21,12 @@ Oba korzystają z tej samej logiki.
 ## Rozwój
 
 - Iteracyjnie, małymi etapami łatwymi do ręcznej weryfikacji.
-- Rób tylko bieżący etap. Nie dodawaj funkcji z kolejnych etapów.
+- Plan etapów jest w `PLAN.md`. Rób tylko bieżący etap. Nie dodawaj funkcji z kolejnych etapów.
 - Commit dopiero po potwierdzeniu etapu przez użytkownika.
+- Po każdym wykonanym etapie oznacz go w `PLAN.md`: `[x]` przy nagłówku etapu
+  i w tabeli „Postęp”, data i skrót commita w polu „Ukończono”.
+  Zmiana `PLAN.md` wchodzi do commita danego etapu (lub, jeśli skrót commita
+  nie jest jeszcze znany, do osobnego commita `docs: oznacz etap N w planie`).
 - Wiadomości commitów: konwencja `typ: opis` (np. `feat: eksport CSV`).
 
 ## Architektura (docelowa)
