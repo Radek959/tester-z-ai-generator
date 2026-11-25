@@ -60,6 +60,13 @@ Jeden plik = jeden scenariusz.
 MVP: `poprawne`, `graniczne`, `brakujace_pole`, `bledne`.
 Później: duplikaty, nietypowe znaki.
 
+Każdy nowy scenariusz musi być dostępny w obu interfejsach, nie tylko w logice:
+- frontend: wpis z krótkim polskim opisem w `OPISY_SCENARIUSZY` w `web/app.py`
+  (formularz bierze listę z `SCENARIUSZE`, ale bez opisu scenariusz jest niezrozumiały),
+- CLI: linia z opisem w sekcji „Scenariusze” pomocy w `testdata/__main__.py`,
+- testy: generowanie pliku przez formularz i przez CLI dla nowego scenariusza.
+Scenariusz dostępny tylko w jednym z interfejsów oznacza, że etap nie jest gotowy.
+
 ## Formaty
 
 MVP: JSON, CSV. Później: TXT, VCF, ICS.
